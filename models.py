@@ -1,14 +1,15 @@
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import backref
 
 db = SQLAlchemy()
+DEFAULT_URL = 'https://tinyurl.com/truffle-cupcake'
 
 
 def connect_db(app):
         """ connect to db"""
         db.app = app
         db.init_app(app)
+
 
 class Cupcakes(db.Model):
     ''' SQLALChemy Cupcakes class'''
@@ -24,5 +25,4 @@ class Cupcakes(db.Model):
     rating = db.Column(db.Float, 
                        nullable=False)
 
-    image = db.Column(db.Text, 
-            default='https://tinyurl.com/truffle-cupcake')
+    image = db.Column(db.Text, default=DEFAULT_URL)

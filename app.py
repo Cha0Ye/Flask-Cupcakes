@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, redirect, render_template
 from models import db, connect_db, Cupcakes
 from flask_debugtoolbar import DebugToolbarExtension
 
-from flask_wtf import FlaskForm
+# from flask_wtf import FlaskForm
 #from forms import AddNewPetForm, EditPetForm
 from flask_sqlalchemy import SQLAlchemy
 
@@ -25,8 +25,8 @@ connect_db(app)
 def show_all_cupcakes():
     '''return JSON list of all cupcakes in dictionaries
 
-    [{'flavor':cupcake.flavor, 'size':cupcake.size,
-    'rating':cupcake.rating, 'image':cupcake.image}, {...}]
+    [{'flavor':..., 'size': ...,
+    'rating':..., 'image':image}, {...}]
 
     '''
     cupcakes = Cupcakes.query.all()
@@ -42,8 +42,8 @@ def add_cupcake():
     '''Take in JSON data and add cupcake to database
        Return dictionary of new cupcake.
 
-    "{'id': id, 'flavor': flavor, 'size': size,
-    'rating': rating, 'image': image}"
+    "{'id': ..., 'flavor': ..., 'size': ...,
+    'rating': ..., 'image': ...}"
 
     '''
 
@@ -59,6 +59,6 @@ def add_cupcake():
     db.session.add(new_cupcake)
     db.session.commit()
 
-    id = Cupcakes.query.get(flavor=f'{flavor}')
-    new_cupcake_dict = {'id':id, 'flavor':flavor, 'size':size, 'rating':rating, 'image':image}
+    new_cupcake_dict = {'id': new_cupcake.id, 'flavor': flavor,
+                        'size': size, 'rating': rating, 'image': image}
     return jsonify(response=new_cupcake_dict)
