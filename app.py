@@ -27,3 +27,19 @@ def show_all_cupcakes():
     cupcakes = Cupcakes.query.all()
     serialized_cupcakes = [{'flavor':cupcake.flavor, 'size':cupcake.size, 'rating':cupcake.rating, 'image':cupcake.image} for cupcake in cupcakes]
     return jsonify(response=serialized_cupcakes)
+
+@app.route('/cupcakes', methods=["POST"])
+def show_all_cupcakes():
+    '''add cupcake'''
+    flavor  = request.json['flavor']
+    size  = request.json['size']
+    rating  = request.json['rating']
+    image = request.json['image'] or None
+
+    new_cupcake = Cupcakes(flavor=flavor, size=size, rating=rating, image=image)
+    db.session.add(new_cupcake)
+    db.session.commit()
+
+    id = Cupcakes.query.get(flavor=f'{flavor}')
+    new_cupcake_dict = {'id':id, 'flavor':flavor, 'size':size, 'rating':rating, 'image':image}
+    return jsonify(response=new_cupcake_dict)
