@@ -62,3 +62,31 @@ def add_cupcake():
     new_cupcake_dict = {'id': new_cupcake.id, 'flavor': flavor,
                         'size': size, 'rating': rating, 'image': image}
     return jsonify(response=new_cupcake_dict)
+
+    @app.route('/cupcakes/<int:id>', methods=['PATCH'])
+    def update_cupcake(id):
+        ''' update a current cupcake by its id modifying all fields
+
+        "{'id': ..., 'flavor': ..., 'size': ...,
+        'rating': ..., 'image': ...}"
+
+        '''
+        cupcake_to_modify = Cupcakes.query.get(id)
+        cupcake_to_modify.flavor = request.json['flavor']
+        cupcake_to_modify.size = request.json['size']
+        cupcake_to_modify.rating = request.json['rating']
+        cupcake_to_modify.image = request.json['image']
+
+        updated_cupcake_dict = {'id': id,
+                                'flavor': cupcake_to_modify.flavor,
+                                'size': cupcake_to_modify.size,
+                                'rating': cupcake_to_modify.rating,
+                                'image': cupcake_to_modify.image}
+        return jsonify(response=updated_cupcake_dict)
+
+    @app.route('/cupcakes/<int:id>', methods=['DELETE'])
+    def delete_cupcake(id):
+        ''' update a current cupcake by its id modifying all fields'''
+        db.session.delete(id)
+
+        return jsonify(response={"message": "Deleted"})
