@@ -14,15 +14,15 @@ def connect_db(app):
 class Cupcakes(db.Model):
     ''' SQLALChemy Cupcakes class'''
     __tablename__ = 'cupcakes'
-    id = db.Column(db.Integer, primary_key=True, 
+    id = db.Column(db.Integer, primary_key=True,
                    autoincrement=True)
 
-    flavor = db.Column(db.Text, 
+    flavor = db.Column(db.Text,
                        nullable=False)
-    size = db.Column(db.Text, 
+    size = db.Column(db.Text,
                      nullable=False)
 
-    rating = db.Column(db.Float, 
+    rating = db.Column(db.Float,
                        nullable=False)
 
     image = db.Column(db.Text, default=DEFAULT_URL)
