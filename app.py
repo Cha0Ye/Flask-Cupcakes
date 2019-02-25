@@ -23,20 +23,39 @@ connect_db(app)
 
 @app.route('/cupcakes', methods=["GET"])
 def show_all_cupcakes():
-    '''show all cupcakes'''
+    '''return JSON list of all cupcakes in dictionaries
+
+    [{'flavor':cupcake.flavor, 'size':cupcake.size,
+    'rating':cupcake.rating, 'image':cupcake.image}, {...}]
+
+    '''
     cupcakes = Cupcakes.query.all()
-    serialized_cupcakes = [{'flavor':cupcake.flavor, 'size':cupcake.size, 'rating':cupcake.rating, 'image':cupcake.image} for cupcake in cupcakes]
+    serialized_cupcakes = [{'flavor': cupcake.flavor,
+                            'size': cupcake.size,
+                            'rating': cupcake.rating,
+                            'image': cupcake.image} for cupcake in cupcakes]
     return jsonify(response=serialized_cupcakes)
 
+
 @app.route('/cupcakes', methods=["POST"])
-def show_all_cupcakes():
-    '''add cupcake'''
-    flavor  = request.json['flavor']
-    size  = request.json['size']
-    rating  = request.json['rating']
+def add_cupcake():
+    '''Take in JSON data and add cupcake to database
+       Return dictionary of new cupcake.
+
+    "{'id': id, 'flavor': flavor, 'size': size,
+    'rating': rating, 'image': image}"
+
+    '''
+
+    flavor = request.json['flavor']
+    size = request.json['size']
+    rating = request.json['rating']
     image = request.json['image'] or None
 
-    new_cupcake = Cupcakes(flavor=flavor, size=size, rating=rating, image=image)
+    new_cupcake = Cupcakes(flavor=flavor,
+                           size=size,
+                           rating=rating,
+                           image=image)
     db.session.add(new_cupcake)
     db.session.commit()
 
