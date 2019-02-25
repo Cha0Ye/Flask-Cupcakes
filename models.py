@@ -10,7 +10,7 @@ def connect_db(app):
         db.app = app
         db.init_app(app)
 
-Class Cupcakes(db.Model):
+class Cupcakes(db.Model):
     ''' SQLALChemy Cupcakes class'''
     __tablename__ = 'cupcakes'
     id = db.Column(db.Integer, primary_key=True, 
