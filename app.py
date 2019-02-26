@@ -1,9 +1,7 @@
-from flask import Flask, jsonify, request, redirect, render_template
+from flask import Flask, jsonify, request, render_template
 from models import db, connect_db, Cupcakes
 from flask_debugtoolbar import DebugToolbarExtension
 
-# from flask_wtf import FlaskForm
-#from forms import AddNewPetForm, EditPetForm
 from flask_sqlalchemy import SQLAlchemy
 
 DEFAULT_PHOTO = 'https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg'
@@ -18,12 +16,13 @@ app.config['SQLALCHEMY_ECHO'] = True
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
-#db.create_all()
+
 
 @app.route('/')
 def render_index_page():
     '''renders index page'''
     return render_template('index.html')
+
 
 @app.route('/cupcakes', methods=["GET"])
 def show_all_cupcakes():
