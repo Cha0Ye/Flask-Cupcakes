@@ -20,6 +20,10 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 #db.create_all()
 
+@app.route('/')
+def render_index_page():
+    '''renders index page'''
+    return render_template('index.html')
 
 @app.route('/cupcakes', methods=["GET"])
 def show_all_cupcakes():
