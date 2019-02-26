@@ -66,8 +66,6 @@ def add_cupcake():
 
 @app.route('/cupcakes/<int:id>', methods=['PATCH'])
 def update_cupcake(id):
-
-    print("I am in patch!")
     ''' update a current cupcake by its id modifying all fields
 
     "{'id': ..., 'flavor': ..., 'size': ...,

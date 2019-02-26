@@ -82,3 +82,15 @@ class Our_Integration_Test(unittest.TestCase):
         self.assertEqual(response.json['response']['image'], "https://img1.southernliving.timeinc.net/sites/default/files/styles/medium_2x/public/image/2018/03/main/2474001_justa_7815_0.jpg?itok=-6H_JauG")
 
         self.assertEqual(response.status_code, 200)
+
+    def test_delete_cupcake(self):
+        ''' /cupcakes/id method DELETE should remove cupcake from database'''
+        response = self.client.delete("/cupcakes/10000")
+
+        self.assertEqual(response.json['response']['message'], 'Deleted')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get("/cupcakes")
+        response_data = response.json['response']
+        self.assertEqual(len(response_data), 0)
