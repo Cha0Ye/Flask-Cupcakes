@@ -68,14 +68,13 @@ class Our_Integration_Test(unittest.TestCase):
                   "image": 'https://tinyurl.com/truffle-cupcake'
                   })
         self.assertEqual(default_img_response.json['response']['image'],
-                         "https://tinyurl.com/truffle-cupcake")          
+                         "https://tinyurl.com/truffle-cupcake")    
         # Testing to see if a resource was added to database.
 
         response = self.client.get("/cupcakes")
         response_data = response.json['response']
         self.assertEqual(len(response_data), 3)
 
-    #test patch
     def test_patch_cupcake(self):
         ''' /cupcakes/id method PATCH should modify the cupcake'''
         response = self.client.patch("/cupcakes/10000",
