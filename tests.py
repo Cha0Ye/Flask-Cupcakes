@@ -60,11 +60,19 @@ class Our_Integration_Test(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+        default_img_response = self.client.post(
+            "/cupcakes",
+            json={"flavor": "Strawberry",
+                  "size": 'small',
+                  "rating": 9.5,
+                  "image": 'https://tinyurl.com/truffle-cupcake'
+                  })
+        self.assertEqual(default_img_response.json['response']['image'], "https://tinyurl.com/truffle-cupcake")          
         # Testing to see if a resource was added to database.
 
         response = self.client.get("/cupcakes")
         response_data = response.json['response']
-        self.assertEqual(len(response_data), 2)
+        self.assertEqual(len(response_data), 3)
 
 #test patch
     def test_patch_cupcake(self):
@@ -80,8 +88,16 @@ class Our_Integration_Test(unittest.TestCase):
         self.assertEqual(response.json['response']['size'], 'medium')
         self.assertEqual(response.json['response']['rating'], 9.8)
         self.assertEqual(response.json['response']['image'], "https://img1.southernliving.timeinc.net/sites/default/files/styles/medium_2x/public/image/2018/03/main/2474001_justa_7815_0.jpg?itok=-6H_JauG")
-
+        
         self.assertEqual(response.status_code, 200)
+        response = self.client.get("/cupcakes")
+        
+        response_data = response.json['response']
+        self.assertEqual(response_data[0]['flavor'], 'Strawberry/Blueberry')
+        self.assertEqual(response_data[0]['size'], 'medium')
+        self.assertEqual(response_data[0]['rating'], 9.8)
+        self.assertEqual(response_data[0]['image'], "https://img1.southernliving.timeinc.net/sites/default/files/styles/medium_2x/public/image/2018/03/main/2474001_justa_7815_0.jpg?itok=-6H_JauG")
+        
 
     def test_delete_cupcake(self):
         ''' /cupcakes/id method DELETE should remove cupcake from database'''
